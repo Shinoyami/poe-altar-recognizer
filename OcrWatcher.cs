@@ -62,7 +62,11 @@ public sealed class OcrWatcher : IDisposable
         {
             var duplicate = unique.Any(other =>
                 Math.Abs(CenterX(other.Bounds) - CenterX(match.Bounds)) < 40 &&
-                Math.Abs(CenterY(other.Bounds) - CenterY(match.Bounds)) < 25);
+                // Overlapping OCR tiles can report the same line more than once,
+                // but neighboring altar lines are commonly only ~20 px apart.
+                // Keep those neighboring lines as separate matches.
+                Math.Abs(CenterY(other.Bounds) - CenterY(match.Bounds)) <
+                Math.Max(6, Math.Min(other.Bounds.Height, match.Bounds.Height) * 0.35));
             if (!duplicate) unique.Add(match);
         }
         return unique;
@@ -190,7 +194,12 @@ public sealed class OcrWatcher : IDisposable
         }
 
         converted?.Dispose();
-        return boxes.OrderByDescending(box => box.TextPixels)
+        // A top border from one altar can occasionally pair with the bottom
+        // border of the other and form one large false panel. Real altar panels
+        // have a higher concentration of modifier-colored text than that gap-
+        // spanning rectangle, so rank by density rather than total text pixels.
+        return boxes.OrderByDescending(box =>
+                (double)box.TextPixels / (box.Rect.Width * box.Rect.Height))
             .Take(2)
             .Select(box => box.Rect)
             .ToList();
