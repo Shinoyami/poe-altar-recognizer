@@ -1,0 +1,85 @@
+<Window x:Class="PoeAltarGuard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="POE Altar Recognizer" Width="620" Height="650"
+        WindowStartupLocation="CenterScreen" MinWidth="540" MinHeight="560"
+        Background="#171717" Foreground="#F2F2F2">
+  <Grid Margin="24">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <TextBlock FontSize="24" FontWeight="SemiBold" Text="POE Altar Recognizer"/>
+    <TextBlock Grid.Row="1" Margin="0,10,0,18" Foreground="#BDBDBD"
+               TextWrapping="Wrap"
+               Text="Add one modifier per line. Good matches are marked green; bad matches are marked red."/>
+
+    <Grid Grid.Row="2" Margin="0,0,0,16">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition/>
+        <ColumnDefinition Width="14"/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      <StackPanel>
+        <TextBlock Margin="0,0,0,7" Foreground="#74E58A" FontWeight="Bold" Text="GOOD MODIFIERS"/>
+        <Grid MinHeight="220">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="42"/>
+            <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+          <TextBox x:Name="GoodLineNumbers" IsReadOnly="True" IsHitTestVisible="False"
+                   VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"
+                   Padding="5,9" FontFamily="Consolas" FontSize="14"
+                   TextAlignment="Right" Background="#18201A" Foreground="#699272"
+                   BorderBrush="#337744"/>
+          <TextBox Grid.Column="1" x:Name="GoodModifiersText" AcceptsReturn="True"
+                   TextWrapping="NoWrap" VerticalScrollBarVisibility="Auto"
+                   HorizontalScrollBarVisibility="Auto" Padding="9" FontFamily="Consolas"
+                   FontSize="14" Background="#202A22" Foreground="White"
+                   BorderBrush="#337744" ScrollViewer.ScrollChanged="ModifierText_ScrollChanged"/>
+        </Grid>
+      </StackPanel>
+      <StackPanel Grid.Column="2">
+        <TextBlock Margin="0,0,0,7" Foreground="#FF7777" FontWeight="Bold" Text="BAD MODIFIERS"/>
+        <Grid MinHeight="220">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="42"/>
+            <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+          <TextBox x:Name="BadLineNumbers" IsReadOnly="True" IsHitTestVisible="False"
+                   VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"
+                   Padding="5,9" FontFamily="Consolas" FontSize="14"
+                   TextAlignment="Right" Background="#201818" Foreground="#A06666"
+                   BorderBrush="#883333"/>
+          <TextBox Grid.Column="1" x:Name="BadModifiersText" AcceptsReturn="True"
+                   TextWrapping="NoWrap" VerticalScrollBarVisibility="Auto"
+                   HorizontalScrollBarVisibility="Auto" Padding="9" FontFamily="Consolas"
+                   FontSize="14" Background="#2A2020" Foreground="White"
+                   BorderBrush="#883333" ScrollViewer.ScrollChanged="ModifierText_ScrollChanged"/>
+        </Grid>
+      </StackPanel>
+    </Grid>
+
+    <Button Grid.Row="3" x:Name="ToggleButton" Height="42"
+            Content="Start watching the entire screen" Click="Toggle_Click"/>
+
+    <StackPanel Grid.Row="4" Margin="0,18,0,0">
+      <TextBlock x:Name="StatusText" FontWeight="SemiBold" Text="Ready to watch the entire screen."/>
+      <TextBlock Margin="0,8,0,0" Foreground="#999" TextWrapping="Wrap"
+                 Text="OCR automatically pauses when Path of Exile is not focused. Use Windowed Fullscreen. Press Ctrl+Shift+F8 to stop."/>
+      <TextBlock Margin="0,16,0,4" Foreground="#BDBDBD" TextWrapping="Wrap"
+                 Text="Copy the wanted mods from altars in the link below from PoE DB"/>
+      <TextBlock>
+        <Hyperlink NavigateUri="https://poedb.tw/us/Eldritch_Altar#EldritchAltar"
+                   RequestNavigate="PoEDbLink_RequestNavigate"
+                   Foreground="#77B9FF">
+          https://poedb.tw/us/Eldritch_Altar#EldritchAltar
+        </Hyperlink>
+      </TextBlock>
+    </StackPanel>
+  </Grid>
+</Window>

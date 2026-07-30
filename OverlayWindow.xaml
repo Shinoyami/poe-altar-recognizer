@@ -1,0 +1,8 @@
+<Window x:Class="PoeAltarGuard.OverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ShowInTaskbar="False" Topmost="True" IsHitTestVisible="False">
+  <Border x:Name="MatchBorder" BorderBrush="#FFFF2020" BorderThickness="4"
+          Background="#35FF0000" CornerRadius="2"/>
+</Window>
